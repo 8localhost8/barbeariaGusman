@@ -3,8 +3,14 @@
 // EDITAR DEMONSTRAÇÃO: mude para false quando o site estiver pronto para atender.
 const DEMO_MODE = true;
 const DEMO_NOTICE = 'Este site é apenas uma demonstração. As funcionalidades de agendamento e contato serão implementadas após a compra do site.';
-// EDITAR SERVIÇOS: exemplos provisórios. Confirme a oferta antes de publicar.
-const SERVICES = ['Corte', 'Barba', 'Corte + Barba', 'Infantil'];
+// EDITAR SERVIÇOS: preços em reais, conforme tabela fornecida.
+const SERVICES = [
+  { name: 'Corte', price: 40 },
+  { name: 'Barba', price: 30 },
+  { name: 'Sobrancelha', price: 10 },
+  { name: 'Limpeza de pele', price: 30 }
+];
+const PRICE_FORMAT = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
 // EDITAR CONTATO: mantenha o número internacional, sem pontuação.
 const WHATSAPP_NUMBER = '5514996020913';
 const ADDRESS = 'R. Pref. José Gonçalves de Oliveira Neto, 175 – Centro, Bocaina – SP, 17240-000';
@@ -75,12 +81,12 @@ const DEFAULT_MESSAGE = 'Olá! Quero marcar um horário na Barbearia Gusman.';
   const daySelect = $('#day-select');
   const bookingLink = $('#booking-link');
   const messagePreview = $('#message-preview');
-  let chosenService = SERVICES[0] || '';
+  let chosenService = SERVICES[0] || null;
 
   function updateMessage() {
     const day = daySelect?.value || '';
     const dayPhrase = day ? `, ${['sábado', 'domingo'].includes(day) ? 'no' : 'na'} ${day}` : '';
-    const message = chosenService ? `Olá! Quero agendar: ${chosenService}${dayPhrase}.` : DEFAULT_MESSAGE;
+    const message = chosenService ? `Olá! Quero agendar: ${chosenService.name} (${PRICE_FORMAT.format(chosenService.price)})${dayPhrase}.` : DEFAULT_MESSAGE;
     if (messagePreview) messagePreview.textContent = message;
     if (bookingLink) bookingLink.href = contactUrl(message);
   }
@@ -90,7 +96,7 @@ const DEFAULT_MESSAGE = 'Olá! Quero marcar um horário na Barbearia Gusman.';
       const button = document.createElement('button');
       button.type = 'button';
       button.className = `service-chip${index === 0 ? ' is-selected' : ''}`;
-      button.textContent = service;
+      button.textContent = `${service.name} · ${PRICE_FORMAT.format(service.price)}`;
       button.setAttribute('aria-pressed', String(index === 0));
       button.addEventListener('click', () => {
         chosenService = service;
