@@ -5,3 +5,7 @@ Desktop.ini
 .env
 .env.*
 !.env.example
+
+# Imagens de referencia na raiz
+/*.png
+/*.jpg

@@ -11,3 +11,4 @@ Abra `index.html` ou execute `python -m http.server 8765 --bind 127.0.0.1` nesta
 - Serviços e preços no array `SERVICES` de `script.js`: Corte R$ 40, Barba R$ 30, Sobrancelha R$ 10 e Limpeza de pele R$ 30.
 - Facebook omitido por solicitação do proprietário do projeto.
 - Fotos originais em `Fotos/` e versões otimizadas em `Fotos/web/`.
+- As capturas e as imagens com nomes originais na raiz são os materiais de referência.
